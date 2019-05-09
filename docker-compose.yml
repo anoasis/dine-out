@@ -1,0 +1,29 @@
+version: '3'
+services:
+  client:
+    container_name: client
+    restart: always
+    build: ./client
+    ports:
+      - "80:3000"
+    links:
+      - server
+  server:
+    container_name: server
+    restart: always
+    build: ./server
+    ports:
+      - "8080:8080"
+    volumes:
+      - /app/node_modules
+    depends_on:
+      - mongo
+  mongo:
+    build: ./db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=dine
+      - MONGO_INITDB_ROOT_PASSWORD=out
+      - MONGO_INITDB_DATABASE=dine
+    ports:
+      - 27017:27017
+

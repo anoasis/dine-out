@@ -1,0 +1,11 @@
+
+ul li {
+  background: #cce5ff;
+  margin: 5px;
+}
+.upVoted{
+  color:rgb(0, 183, 255);
+}
+.downVoted{
+  color:rgb(255, 50, 111)
+}

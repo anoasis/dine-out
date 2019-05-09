@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- set the character set -->
+  <meta charset="utf-8">
+  <!-- tell IE to use latest version and chrome frame if available -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Demo - User Vote History</title>
+
+  <!-- include basic style sheet -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="h-80">
+    <div id="container">
+      <div id="form">
+        User ID <input id="userId" type="text" />
+        <button id="lookup">Look up</button>
+      </div>
+      <div class="search-result">
+        <ul id="result"></ul>
+      </div>
+    </div>
+  </div>
+<script>
+
+$(document).ready(function () {
+    var result = $('#result');
+    var voteMap = {};
+    $('#lookup').click(function () {
+      $.getJSON('http://server:8080/log/'+$('#userId').val(), function (data) {
+        var votes = data[0].vote.map(function (v) {
+          voteMap[v.placeId] = v.upVote;
+          $.getJSON('http://server:8080/place/'+v.placeId).done(function (p) {
+            var upVoteContent = (voteMap[p[0].placeId])? 
+            ' <span><i id="'+p[0].placeId+'" name="'+p[0].placeId+'-UP" upVote="true" class="fa fa-thumbs-up"></i></span>':
+            ' <span><i id="'+p[0].placeId+'" name="'+p[0].placeId+'-DOWN" upVote="false" class="fa fa-thumbs-down"></i></span>';
+            var place = '<li><h3>'+p[0].name+upVoteContent+'</h3></li>'
+              +'<span>'+p[0].phoneNumber+'</span><br/><span>'+p[0].address+'</span>';
+            result.append(place);
+          });
+        });
+      });
+  
+    });
+
+  });
+</script>
+</body>
+</html>
