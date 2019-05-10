@@ -33,7 +33,7 @@ class App {
             .connect(
                 //'mongodb://localhost/dine',
                 'mongodb://'+process.env.MONGO_INITDB_ROOT_USERNAME+':'+process.env.MONGO_INITDB_ROOT_PASSWORD+'@'+process.env.MONGO_SERVER+':27017/'+process.env.MONGO_INITDB_DATABASE,
-                { useCreateIndex: true, useNewUrlParser: true}
+                { useCreateIndex: true, useNewUrlParser: true, auth:{authdb:"admin"}}
             )
             .then(() => console.log('MongoDB Connected'))
             .catch(err => {throw err});      
