@@ -1,2 +1,2 @@
-FROM mongo:3.6
+FROM mongo:4.0
 COPY seed-data.js /docker-entrypoint-initdb.d/

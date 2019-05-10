@@ -21,6 +21,7 @@ export const PlaceSearchService = (keyword,lat,lng) => {
             });
             resp.on('end', () => {
                 let searchResult:PlaceNearByPayloadType = JSON.parse(data);
+                console.log(searchResult)
                 let cachedPlaces:String[] = [];
                 let needAnalysisPlaces:String[] = [];
                 searchResult.results.forEach(placeNearBy => {
@@ -132,7 +133,7 @@ function persistPlaces(analyzedPlaces:PlaceType[]) {
         })
         .catch( err => {
           console.log('BULK update error');
-          console.log(JSON.stringify(err, null, 2));
+          console.log(err);
           reject(analyzedPlaceIds);
         });
         operations = [];
