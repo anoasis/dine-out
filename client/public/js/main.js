@@ -23,29 +23,33 @@ $(document).ready(function () {
           result.append(list);
         }
         $('ol li i').click(function(e) {
-          var vot = $(this).attr('upVote')=="true"? true:false;
+          if($('#userId').val()){
+            var vot = $(this).attr('upVote')=="true"? true:false;
           
-          var voteReq = { 
-            userId: $('#userId').val(),
-            vote: {
-              placeId: $(this).attr('id'),
-              upVote: vot
+            var voteReq = { 
+              userId: $('#userId').val(),
+              vote: {
+                placeId: $(this).attr('id'),
+                upVote: vot
+              }
             }
+            console.log(voteReq);
+            $.ajax({
+              type: "POST",
+              url: "http://server:8080/vote",
+              data: JSON.stringify(voteReq),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function(vote){
+                check(vote.placeId, vote.upVote);
+              },
+              failure: function(errMsg) {
+                  alert(errMsg);
+              }
+            });
+          }else{
+            alert("Please enter your User ID before voting.");
           }
-          console.log(voteReq);
-          $.ajax({
-            type: "POST",
-            url: "http://server:8080/vote",
-            data: JSON.stringify(voteReq),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(vote){
-              check(vote.placeId, vote.upVote);
-            },
-            failure: function(errMsg) {
-                alert(errMsg);
-            }
-          });
         });
       });
   
