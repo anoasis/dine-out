@@ -19,11 +19,6 @@ class VoteController {
                 if (userLog.vote) {
                     userLog.vote.forEach(e => {
                         if (e.placeId === voteReq.vote.placeId) {
-                            console.log("e.upVote => '" + e.upVote + "'");
-                            console.log("voteReq.upVote => '" + voteReq.vote.upVote + "'");
-                            console.log(e.upVote == voteReq.vote.upVote);
-                            console.log(typeof e.upVote);
-                            console.log(typeof voteReq.vote.upVote);
                             if (e.upVote === voteReq.vote.upVote) {
                                 sameVoteExists = true;
                             }

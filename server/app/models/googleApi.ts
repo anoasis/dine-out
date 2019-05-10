@@ -20,6 +20,8 @@ export interface PlaceDetailResultType {
 
 export interface PlaceDetailPayloadType {
     result: PlaceDetailResultType,
+    html_attributions : string,
+    error_message : string,
     status: string
 };
 
@@ -68,5 +70,6 @@ export interface PlaceNearByType {
 export interface PlaceNearByPayloadType {
     results: PlaceNearByType[],
     html_attributions : string,
+    error_message : string,
     status: string
 };

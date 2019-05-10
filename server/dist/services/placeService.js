@@ -8,9 +8,9 @@ exports.GetPlaceById = (placeId) => {
         resolve(Place.find({ placeId: placeId }).exec());
     });
 };
-exports.GetPlaceByIds = (cachedPlaces) => {
+exports.GetPlacesSortByScore = (cachedPlaces) => {
     return new Promise((resolve, reject) => {
-        resolve(Place.find({ placeId: { "$in": cachedPlaces } }).exec());
+        resolve(Place.find({ placeId: { "$in": cachedPlaces } }).sort([['score', -1]]).exec());
     });
 };
 //# sourceMappingURL=placeService.js.map

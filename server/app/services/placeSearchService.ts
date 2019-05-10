@@ -21,7 +21,6 @@ export const PlaceSearchService = (keyword,lat,lng) => {
             });
             resp.on('end', () => {
                 let searchResult:PlaceNearByPayloadType = JSON.parse(data);
-                console.log(searchResult)
                 let cachedPlaces:String[] = [];
                 let needAnalysisPlaces:String[] = [];
                 searchResult.results.forEach(placeNearBy => {

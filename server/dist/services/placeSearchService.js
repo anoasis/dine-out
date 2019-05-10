@@ -39,7 +39,7 @@ exports.PlaceSearchService = (keyword, lat, lng) => {
                 });
                 //Try return cached data first
                 if (cachedPlaces.length)
-                    resolve(placeService_1.GetPlaceByIds(cachedPlaces));
+                    resolve(placeService_1.GetPlacesSortByScore(cachedPlaces));
                 try { //In case no cached data, wait for the analysis process result. Ideally serve the results in the streaming fashion
                     let batchResult = invokeBatch(needAnalysisPlaces);
                     batchResult.then(function (successfuPlaceIds) {
@@ -80,7 +80,6 @@ function invokeBatch(needAnalysisPlaces) {
             result.forEach(function (e) {
                 cacheFilter.add(e); //add updated ones in cache filter
             });
-            return analyzedPlaces;
         }, (error) => {
             console.log("Error while persisting Place IDs: " + error);
             invokeBatch(error);
@@ -99,7 +98,7 @@ function invokeBatch(needAnalysisPlaces) {
                 }
             });
         }
-        return analyzedPlaces;
+        return analyzedPlaces.sort((a, b) => (a.totalScore > b.totalScore) ? 1 : ((b.totalScore > a.totalScore) ? -1 : 0));
     });
 }
 function analysisTask(needAnalysisPlaces) {
@@ -133,7 +132,7 @@ function persistPlaces(analyzedPlaces) {
         })
             .catch(err => {
             console.log('BULK update error');
-            console.log(JSON.stringify(err, null, 2));
+            console.log(err);
             reject(analyzedPlaceIds);
         });
         operations = [];

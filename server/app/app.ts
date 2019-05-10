@@ -4,6 +4,7 @@ import * as bodyParser from "body-parser";
 import { Routes } from "./routes/routes";
 import * as mongoose from "mongoose";
 import * as dotenv from "dotenv";
+import { SanityCheckService } from './services/sanityCheckService'
 dotenv.config();
 
 class App {
@@ -15,7 +16,10 @@ class App {
         this.config();
         this.mongoSetup();
         this.routePrv.routes(this.app);
-        if(!process.env.API_KEY) throw Error("Please setup .env file with 'API_KEY=<Your Google API KEY>' under the <project home dir>/server folder.");
+        SanityCheckService().then(
+            (result) => console.log("All good with the basic sanity check!"), 
+            (error) => console.log(error)
+        );
     }
 
     private config(): void{
