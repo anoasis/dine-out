@@ -10,6 +10,6 @@ export const GetPlaceById = (placeId:String) => {
 };
 export const GetPlacesSortByScore = (cachedPlaces:String[]) => {
     return new Promise<PlaceType[]>((resolve, reject) => {
-        resolve(Place.find({ placeId: { "$in" : cachedPlaces } }).sort([['score', -1]]).exec())
+        resolve(Place.find({ placeId: { "$in" : cachedPlaces } }).sort([['totalScore', -1]]).exec())
     })
 };

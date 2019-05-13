@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/express": "^4.16.1",
     "@types/lodash": "^4.14.123",
+    "@types/ws": "^6.0.1",
     "bloom-filters": "^0.5.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -16,7 +17,8 @@
     "mongodb": "^3.2.3",
     "mongoose": "^5.5.5",
     "nodemon": "^1.19.0",
-    "sentiment": "^5.0.1"
+    "sentiment": "^5.0.1",
+    "ws": "^7.0.0"
   },
   "scripts": {
     "dev": "ts-node ./app/server.ts",

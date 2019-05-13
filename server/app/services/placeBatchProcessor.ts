@@ -3,9 +3,6 @@ import { PlaceSchema, PlaceType } from '../models/placeModel';
 import { PlaceDetailPayloadType,PlaceDetailResultType } from 'models/googleApi'
 import {SentimentAnalysisProcessor as SentimentAnalysisProcessor } from './sentimentAnalysisProcessor';
 import {GetPlaceById } from './placeService';
-import * as mongoose from 'mongoose';
-
-const Place = mongoose.model('Place', PlaceSchema);
 
 
 export const PlaceBatchProcessor = (placeId:String) => {
@@ -28,7 +25,6 @@ export const PlaceBatchProcessor = (placeId:String) => {
                         Promise.all([sentiment, oldRec]).then(function(result) {
                             let sentimentAnalysis = result[0];
                             let oldRec = result[1];
-                            console.log(oldRec.length);
                             let upVotes = (oldRec.length)? oldRec[0].upVoteCount : 0;
                             let downVotes = (oldRec.length)? oldRec[0].downVoteCount : 0;
 
@@ -57,7 +53,7 @@ export const PlaceBatchProcessor = (placeId:String) => {
                                 downVoteCount: downVotes,
                                 totalScore: score
                             }
-                            console.log(analysedPlace)
+                            //console.log(analysedPlace)
                             resolve(analysedPlace);
                         });
                     }

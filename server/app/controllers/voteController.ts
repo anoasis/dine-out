@@ -2,6 +2,7 @@ import * as mongoose from 'mongoose';
 import { PlaceSchema } from '../models/placeModel';
 import { LogSchema, LogType } from '../models/logModel';
 import { Request, Response } from 'express';
+import PlaceBatchExecutor from '../services/placeBatchExecutor';
 
 const Place = mongoose.model('Place', PlaceSchema);
 const Log = mongoose.model('Log', LogSchema);
@@ -10,6 +11,7 @@ export class VoteController{
 
     public votePlace (req: Request, res: Response) {
         const voteReq = req.body;
+        let batchExec = new PlaceBatchExecutor();
         Log.find({ "userId": voteReq.userId }, (err, userLogs:LogType) => {
             if(err){
                 console.log(err);
@@ -63,7 +65,10 @@ export class VoteController{
                 else Place.findOneAndUpdate({ "placeId": voteReq.vote.placeId }, { $inc: { downVoteCount: 1 } }, (err) => {if(err){ res.send(err); }});
                 console.log({ message: voteReq.userId+" voted " +voteReq.vote.placeId + (voteReq.vote.upVote)?" UP":" DOWN"});
             }
-        })
+        }).then(()=>{
+            console.log("Recalculatring the total score of "+voteReq.vote.placeId)
+            batchExec.invokeBatch([voteReq.vote.placeId]);
+        });
         
         res.json({ placeId: voteReq.vote.placeId, upVote: voteReq.vote.upVote });
     }

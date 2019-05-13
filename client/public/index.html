@@ -10,6 +10,7 @@
 
   <!-- include basic style sheet -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/@reactivex/rxjs@6.1.0/dist/global/rxjs.umd.js"></script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -18,16 +19,18 @@
   <div class="h-80">
     <div id="container">
       <div id="form">
-        User ID <input id="userId" type="text" />
-        Keyword <input id="keyword" type="text" />
-        Latitude <input id="lat" type="text" />
-        Longitude <input id="lng" type="text" />
+        Latitude <input id="lat" type="text" style="width:100px;" />
+        Longitude <input id="lng" type="text" style="width:100px;" />
+        Radius <input id="radius" type="text" value=1500 style="width:100px;" />
+        User ID <input id="userId" type="text" style="width:100px;" />
+        Keyword <input id="keyword" type="text" style="width:100px;" />
         <button id="search">Search</button>
       </div>
       <div id="result" class="search-result">
+        <ol id="stream"></ol>
       </div>
     </div>
   </div>
-<script src="js/main.js"></script>
+<script src="js/stream.js"></script>
 </body>
 </html>

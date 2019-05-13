@@ -14,7 +14,9 @@ class App {
 
     constructor() {
         this.config();
-        this.mongoSetup();
+        setTimeout(()=>{
+            this.mongoSetup();
+        }, 30000 ) ;
         this.routePrv.routes(this.app);
         SanityCheckService().then(
             (result) => console.log("All good with the basic sanity check!"), 
@@ -39,7 +41,7 @@ class App {
                 'mongodb://'+process.env.MONGO_INITDB_ROOT_USERNAME+':'+process.env.MONGO_INITDB_ROOT_PASSWORD+'@'+process.env.MONGO_SERVER+':27017/'+process.env.MONGO_INITDB_DATABASE,
                 { useCreateIndex: true, useNewUrlParser: true, auth:{authdb:"admin"}}
             )
-            .then(() => console.log('MongoDB Connected'))
+            .then(() => console.log('MongoDB Connected'), (err) => {console.log(err); throw err})
             .catch(err => {throw err});      
     }
 

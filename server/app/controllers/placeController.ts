@@ -11,7 +11,7 @@ const Log = mongoose.model('Log', LogSchema);
 export class PlaceController{
 
     public searchPlaces (req: Request, res: Response) {
-        PlaceSearchService(req.query.keyword, req.query.lat, req.query.lng).then(
+        PlaceSearchService(req.query.keyword, req.query.lat, req.query.lng, req.query.radius).then(
             (result:PlaceType[]) => {
                 res.json(result);
             }, 

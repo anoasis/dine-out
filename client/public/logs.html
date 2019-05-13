@@ -32,10 +32,10 @@ $(document).ready(function () {
     var result = $('#result');
     var voteMap = {};
     $('#lookup').click(function () {
-      $.getJSON('http://server:8080/log/'+$('#userId').val(), function (data) {
+      $.getJSON('http://localhost:8080/log/'+$('#userId').val(), function (data) {
         var votes = data[0].vote.map(function (v) {
           voteMap[v.placeId] = v.upVote;
-          $.getJSON('http://server:8080/place/'+v.placeId).done(function (p) {
+          $.getJSON('http://localhost:8080/place/'+v.placeId).done(function (p) {
             var upVoteContent = (voteMap[p[0].placeId])? 
             ' <span><i id="'+p[0].placeId+'" name="'+p[0].placeId+'-UP" upVote="true" class="fa fa-thumbs-up"></i></span>':
             ' <span><i id="'+p[0].placeId+'" name="'+p[0].placeId+'-DOWN" upVote="false" class="fa fa-thumbs-down"></i></span>';
